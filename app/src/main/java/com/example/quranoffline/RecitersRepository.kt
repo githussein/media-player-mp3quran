@@ -3,11 +3,12 @@ package com.example.quranoffline
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 // Retrofit API Service
 interface ReciterApiService {
     @GET("reciters")
-    suspend fun getReciters(/*@Query("language") language: String = "eng"*/): ReciterResponse
+    suspend fun getReciters(@Query("language") language: String = "eng"): ReciterResponse
 }
 
 // Data Models
