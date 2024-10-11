@@ -24,18 +24,26 @@ class MainActivity : ComponentActivity() {
         setContent {
             QuranOfflineTheme {
                 val navController = rememberNavController()
-
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
-                    NavHost(navController = navController, startDestination = "AllRecitersScreen") {
-                        composable(route = "AllRecitersScreen") {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = "all_reciters"
+                    ) {
+                        composable("all_reciters") {
                             AllRecitersScreen(
                                 modifier = Modifier
                                     .padding(innerPadding)
                                     .systemBarsPadding(),
-                                viewModel = reciterViewModel
+                                viewModel = reciterViewModel,
+                                onReciterClick = { reciterId ->
+                                    navController.navigate("reciter/$reciterId")
+                                }
                             )
+                        }
+
+                        composable("reciter/{reciterId}") { backStackEntry ->
+                            val reciterId = backStackEntry.arguments?.getString("reciterId")
+                            ReciterScreen(reciterId = reciterId.orEmpty())
                         }
                     }
                 }
