@@ -55,12 +55,9 @@ fun ComposeReciterItem(reciter: Reciter, onReciterClick: (String) -> Unit) {
         }
 
         Icon(
-            modifier = Modifier
-//                .border(4.dp, Color.Companion.Gray, CircleShape)
-                .padding(4.dp),
-//            imageVector = Icons.Default.PlayArrow,
+            modifier = Modifier.padding(4.dp),
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = "play icon"
+            contentDescription = "arrow icon"
         )
     }
 }
@@ -77,9 +74,10 @@ fun ReciterItemPreview() {
             moshaf = listOf(
                 Moshaf(
                     id = 1,
-                    name = "Morattal",
-                    server = "",
-                    surah_total = 114
+                    name = "Murattal",
+                    surah_total = 114,
+                    moshaf_type = 11,
+                    surah_list = "1, 2, 3"
                 )
             )
         )

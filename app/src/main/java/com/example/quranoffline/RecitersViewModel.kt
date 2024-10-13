@@ -10,6 +10,9 @@ class ReciterViewModel : ViewModel() {
     private val _reciters = mutableStateOf<List<Reciter>>(emptyList())
     val reciters: State<List<Reciter>> = _reciters
 
+    private val _selectedReciter = mutableStateOf<Reciter?>(null)
+    val selectedReciter: State<Reciter?> = _selectedReciter
+
     init {
         fetchReciters()
     }
@@ -17,8 +20,19 @@ class ReciterViewModel : ViewModel() {
     private fun fetchReciters() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getReciters()
+                val response = RetrofitInstance.api.getAllReciters()
                 _reciters.value = response.reciters
+            } catch (e: Exception) {
+                // Handle the error
+            }
+        }
+    }
+
+    fun fetchReciterById(id: String) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.getReciterById(reciterId = id)
+                _selectedReciter.value = response.reciters.firstOrNull()
             } catch (e: Exception) {
                 // Handle the error
             }

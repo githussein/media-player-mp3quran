@@ -43,7 +43,13 @@ class MainActivity : ComponentActivity() {
 
                         composable("reciter/{reciterId}") { backStackEntry ->
                             val reciterId = backStackEntry.arguments?.getString("reciterId")
-                            ReciterScreen(reciterId = reciterId.orEmpty())
+                            ReciterScreen(
+                                modifier = Modifier
+                                    .padding(innerPadding)
+                                    .systemBarsPadding(),
+                                viewModel = reciterViewModel,
+                                reciterId = reciterId.orEmpty(),
+                            )
                         }
                     }
                 }
