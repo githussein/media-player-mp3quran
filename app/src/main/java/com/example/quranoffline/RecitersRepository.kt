@@ -17,10 +17,16 @@ interface ReciterApiService {
         @Query("language") language: String = "eng",
         @Query("reciter") reciterId: String
     ): ReciterResponse
+
+    @GET("suwar")
+    suspend fun getSurahName(
+        @Query("language") language: String = "eng",
+    ): SurahResponse
 }
 
 // Data Models
 data class ReciterResponse(val reciters: List<Reciter>)
+data class SurahResponse(val suwar: List<Surah>)
 
 data class Reciter(
     val id: Int,
@@ -35,6 +41,15 @@ data class Moshaf(
     val surah_total: Int,
     val moshaf_type: Int,
     val surah_list: String
+)
+
+data class Surah(
+    val id: Int,
+    val name: String,
+    val start_page: Int,
+    val end_page: Int,
+    val makkia: Int,
+    val type: Int
 )
 
 // Retrofit Instance

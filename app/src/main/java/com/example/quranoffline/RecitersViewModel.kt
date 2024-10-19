@@ -1,5 +1,6 @@
 package com.example.quranoffline
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,9 @@ class ReciterViewModel : ViewModel() {
 
     private val _selectedReciter = mutableStateOf<Reciter?>(null)
     val selectedReciter: State<Reciter?> = _selectedReciter
+
+    private val _surahList = mutableStateOf<List<Surah>>(emptyList())
+    val surahList: State<List<Surah>> = _surahList
 
     init {
         fetchReciters()
@@ -35,6 +39,17 @@ class ReciterViewModel : ViewModel() {
                 _selectedReciter.value = response.reciters.firstOrNull()
             } catch (e: Exception) {
                 // Handle the error
+            }
+        }
+    }
+
+    fun fetchSurahList() {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.getSurahName()
+                _surahList.value = response.suwar
+            } catch (e: Exception) {
+                Log.e("ReciterViewModel", "Error fetching surahs: ${e.message}")
             }
         }
     }

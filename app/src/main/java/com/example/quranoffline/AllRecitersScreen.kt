@@ -27,6 +27,10 @@ fun AllRecitersScreen(modifier: Modifier, viewModel: ReciterViewModel, onReciter
     LazyColumn(
         modifier = modifier
     ) {
+        item {
+            Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = "The Holy Quran", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+
         reciters.forEach {
             item { ComposeReciterItem(it, onReciterClick) }
         }
@@ -48,7 +52,8 @@ fun ComposeReciterItem(reciter: Reciter, onReciterClick: (String) -> Unit) {
                 .padding(end = 16.dp)
                 .weight(1f)
         ) {
-            Text(text = reciter.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(text = reciter.name, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+
             reciter.moshaf.forEach {
                 Text(text = "(${it.surah_total}) ${it.name.substringBefore("-")}", color = Color.Gray, fontSize = 14.sp, maxLines = 1)
             }
