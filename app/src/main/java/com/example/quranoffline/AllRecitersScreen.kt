@@ -80,6 +80,7 @@ fun ReciterItemPreview() {
                 Moshaf(
                     id = 1,
                     name = "Murattal",
+                    server = "",
                     surah_total = 114,
                     moshaf_type = 11,
                     surah_list = "1, 2, 3"

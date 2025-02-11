@@ -38,6 +38,7 @@ data class Reciter(
 data class Moshaf(
     val id: Int,
     val name: String,
+    val server: String,
     val surah_total: Int,
     val moshaf_type: Int,
     val surah_list: String
