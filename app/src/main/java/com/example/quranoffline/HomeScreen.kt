@@ -47,9 +47,9 @@ fun HomeScreen(modifier: Modifier) {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid2)
-            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid7)
-            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid5)
+            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid2, stationName = "Khalifa altunaiji")
+            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid7, stationName = "Maher Almeaqli")
+            ComponentRadioPoster(modifier = modifier, imageId = R.drawable.masjid5, stationName = "Shaik Abu bakr Alshatri")
         }
         Spacer(modifier = modifier.height(32.dp))
 
