@@ -27,8 +27,12 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "all_reciters"
+                        startDestination = "home"
                     ) {
+                        composable("home") {
+                            HomeScreen(modifier = Modifier.systemBarsPadding())
+                        }
+
                         composable("all_reciters") {
                             AllRecitersScreen(
                                 modifier = Modifier
