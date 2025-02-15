@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quranoffline.ui.components.ComponentRadioPoster
+import com.example.quranoffline.ui.components.ComponentScriptPoster
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 
@@ -52,6 +53,7 @@ fun HomeScreen(modifier: Modifier) {
         }
         Spacer(modifier = modifier.height(32.dp))
 
+
         SectionHeader("Reciters", "view all")
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -82,13 +84,13 @@ fun HomeScreen(modifier: Modifier) {
             ),
             {}
         )
-
         Spacer(modifier = modifier.height(32.dp))
-
 
 
         SectionHeader("Quran & Hadith Scripts", null)
         Spacer(modifier = Modifier.height(8.dp))
+        ComponentScriptPoster(modifier = modifier, title = "Quran\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.moshaf)
+        ComponentScriptPoster(modifier = modifier, title = "Hadith\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.hadith)
     }
 }
 
@@ -101,7 +103,7 @@ private fun SectionHeader(left: String, right: String?) {
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(left, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(left, fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Text(right.orEmpty(), color = Color.Blue)
     }
 }
