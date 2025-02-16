@@ -38,8 +38,8 @@ fun ComponentScriptPoster(modifier: Modifier, title: String, description: String
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF6B1FA5),
-                        Color(0xFF993D3D)
+                        Color(0xFF4A0F6F),
+                        Color(0xFF662222)
                     )
                 )
             )
