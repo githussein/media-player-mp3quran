@@ -9,10 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 @Composable
-fun AllRecitersScreen(modifier: Modifier, viewModel: ReciterViewModel, onReciterClick: (String) -> Unit) {
+fun AllRecitersScreen(modifier: Modifier, viewModel: ReciterViewModel, navController: NavController) {
     val reciters: List<Reciter> = viewModel.reciters.value
 
     LazyColumn(
@@ -22,8 +23,12 @@ fun AllRecitersScreen(modifier: Modifier, viewModel: ReciterViewModel, onReciter
             Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = "The Holy Quran", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
 
-        reciters.forEach {
-            item { ComposeReciterItem(it, onReciterClick) }
+        reciters.forEach { reciter ->
+            item {
+                ComposeReciterItem(reciter) {
+                    navController.navigate(ReciterNavigation(reciter.id.toString()))
+                }
+            }
         }
     }
 }

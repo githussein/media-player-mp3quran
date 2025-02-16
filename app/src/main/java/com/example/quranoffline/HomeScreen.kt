@@ -54,7 +54,9 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
         Text("Tilawah App", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionHeader("Radio Stations", "view all") {}
+        SectionHeader("Radio Stations", "view all") {
+            navController.navigate(RadioStations)
+        }
         Spacer(modifier = Modifier.height(8.dp))
 
         val scrollState = rememberScrollState()
@@ -72,7 +74,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
 
 
         SectionHeader("Reciters", "view all") {
-            navController.navigate("all_reciters")
+            navController.navigate(AllReciter)
         }
         Spacer(modifier = Modifier.height(8.dp))
 
