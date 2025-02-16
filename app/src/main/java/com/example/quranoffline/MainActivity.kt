@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = "home"
                     ) {
                         composable("home") {
-                            HomeScreen(modifier = Modifier.systemBarsPadding())
+                            HomeScreen(modifier = Modifier.systemBarsPadding(), navController)
                         }
 
                         composable("all_reciters") {

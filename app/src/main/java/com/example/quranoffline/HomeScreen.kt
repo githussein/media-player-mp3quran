@@ -1,5 +1,6 @@
 package com.example.quranoffline
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,13 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.quranoffline.ui.components.ComponentRadioPoster
 import com.example.quranoffline.ui.components.ComponentScriptPoster
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 
 @Composable
-fun HomeScreen(modifier: Modifier) {
+fun HomeScreen(modifier: Modifier, navController: NavController) {
     val verticalScrollState = rememberScrollState()
     Column(
         modifier = modifier
@@ -52,7 +54,7 @@ fun HomeScreen(modifier: Modifier) {
         Text("Tilawah App", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionHeader("Radio Stations", "view all")
+        SectionHeader("Radio Stations", "view all") {}
         Spacer(modifier = Modifier.height(8.dp))
 
         val scrollState = rememberScrollState()
@@ -69,7 +71,9 @@ fun HomeScreen(modifier: Modifier) {
         Spacer(modifier = modifier.height(32.dp))
 
 
-        SectionHeader("Reciters", "view all")
+        SectionHeader("Reciters", "view all") {
+            navController.navigate("all_reciters")
+        }
         Spacer(modifier = Modifier.height(8.dp))
 
         ComposeReciterItem(
@@ -102,7 +106,7 @@ fun HomeScreen(modifier: Modifier) {
         Spacer(modifier = modifier.height(32.dp))
 
 
-        SectionHeader("Quran & Hadith Scripts", null)
+        SectionHeader("Quran & Hadith Scripts", null) {}
         Spacer(modifier = Modifier.height(8.dp))
         ComponentScriptPoster(modifier = modifier, title = "Quran\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.moshaf)
         ComponentScriptPoster(modifier = modifier, title = "Hadith\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.hadith)
@@ -111,7 +115,7 @@ fun HomeScreen(modifier: Modifier) {
 
 
 @Composable
-private fun SectionHeader(left: String, right: String?) {
+private fun SectionHeader(left: String, right: String?, onViewAllClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,6 +123,6 @@ private fun SectionHeader(left: String, right: String?) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(left, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Text(right.orEmpty(), color = Color.Blue)
+        Text(right.orEmpty(), color = Color.Blue, modifier = Modifier.clickable(onClick = onViewAllClick))
     }
 }
