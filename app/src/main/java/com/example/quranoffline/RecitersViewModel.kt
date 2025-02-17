@@ -5,9 +5,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ReciterViewModel : ViewModel() {
+@HiltViewModel
+class ReciterViewModel @Inject constructor(
+    private val repository: RetrofitInstance
+) : ViewModel() {
     private val _reciters = mutableStateOf<List<Reciter>>(emptyList())
     val reciters: State<List<Reciter>> = _reciters
 
@@ -24,7 +29,7 @@ class ReciterViewModel : ViewModel() {
     private fun fetchReciters() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getAllReciters()
+                val response = repository.api.getAllReciters()
                 _reciters.value = response.reciters
             } catch (e: Exception) {
                 // Handle the error

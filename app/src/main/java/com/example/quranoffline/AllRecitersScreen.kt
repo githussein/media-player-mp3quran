@@ -9,11 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 @Composable
-fun AllRecitersScreen(modifier: Modifier, viewModel: ReciterViewModel, navController: NavController) {
+fun AllRecitersScreen(
+    modifier: Modifier,
+    navController: NavController,
+    viewModel: ReciterViewModel = hiltViewModel()
+) {
     val reciters: List<Reciter> = viewModel.reciters.value
 
     LazyColumn(
