@@ -36,6 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import java.lang.ref.WeakReference
 
 @Composable
 fun ReciterScreen(modifier: Modifier, viewModel: ReciterViewModel, reciterId: String) {
@@ -65,7 +67,11 @@ fun ReciterScreen(modifier: Modifier, viewModel: ReciterViewModel, reciterId: St
         if (surahList.isNotEmpty() && reciter != null) {
             val availableSurahId = reciter.moshaf.first().surah_list.split(",").map { it.toInt() }.toList()
             availableSurahId.forEach {
-                item { ComposeSurahItem(surahList.find { surah -> surah.id == it }, reciter.moshaf.first().server) }
+                item {
+                    ComposeSurahItem(surahList.find { surah -> surah.id == it }, reciter.moshaf.first().server, isPlaying = viewModel.isPlaying?.value ?: false) { url ->
+                        viewModel.playStopAudio(url)
+                    }
+                }
             }
         } else {
             item { CircularProgressIndicator() }
@@ -126,17 +132,8 @@ fun ReciterDropdownMenu(
 }
 
 @Composable
-private fun ComposeSurahItem(surah: Surah?, server: String) {
+private fun ComposeSurahItem(surah: Surah?, server: String, isPlaying: Boolean, onClick: (String) -> Unit) {
     if (surah == null) return
-
-    val mediaPlayer = remember { MediaPlayer() }
-    var isPlaying by remember { mutableStateOf(false) }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            mediaPlayer.release()
-        }
-    }
 
     Row(
         modifier = Modifier
@@ -162,22 +159,7 @@ private fun ComposeSurahItem(surah: Surah?, server: String) {
                 .border(4.dp, Color.Gray, CircleShape)
                 .padding(4.dp)
                 .clickable {
-                    if (isPlaying) {
-                        mediaPlayer.stop()
-                        mediaPlayer.reset()
-                        isPlaying = false
-                    } else {
-                        try {
-                            mediaPlayer.setDataSource(server.formatServerUrl(surah.id))
-                            mediaPlayer.prepareAsync()
-                            mediaPlayer.setOnPreparedListener {
-                                it.start()
-                                isPlaying = true
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
+                    onClick.invoke(server.formatServerUrl(surah.id))
                 },
             imageVector = if (isPlaying) Icons.Default.Menu else Icons.Default.PlayArrow,
             contentDescription = if (isPlaying) "Pause icon" else "Play icon"
