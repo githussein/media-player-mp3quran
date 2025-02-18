@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,30 +53,39 @@ fun ReciterScreen(
     val reciter = viewModel.selectedReciter.value
     val surahList = viewModel.surahList.value
 
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        item {
-            Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = reciter?.name.orEmpty(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+    if (viewModel.isLoading.value) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = Color(0xFF4A0F6F))
         }
-
-
-        if (reciter?.moshaf != null && reciter.moshaf.size > 1) {
-            item { ReciterDropdownMenu(reciter = reciter) }
-        }
-
-
-        if (surahList.isNotEmpty() && reciter != null) {
-            val availableSurahId = reciter.moshaf.first().surah_list.split(",").map { it.toInt() }.toList()
-            availableSurahId.forEach {
-                item { ComposeSurahItem(surahList.find { surah -> surah.id == it }, reciter.moshaf.first().server) }
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = reciter?.name.orEmpty(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
             }
-        } else {
-            item { CircularProgressIndicator() }
-        }
 
+
+            if (reciter?.moshaf != null && reciter.moshaf.size > 1) {
+                item { ReciterDropdownMenu(reciter = reciter) }
+            }
+
+
+            if (surahList.isNotEmpty() && reciter != null) {
+                val availableSurahId = reciter.moshaf.first().surah_list.split(",").map { it.toInt() }.toList()
+                availableSurahId.forEach {
+                    item { ComposeSurahItem(surahList.find { surah -> surah.id == it }, reciter.moshaf.first().server) }
+                }
+            } else {
+                item { CircularProgressIndicator() }
+            }
+
+        }
     }
 }
 
