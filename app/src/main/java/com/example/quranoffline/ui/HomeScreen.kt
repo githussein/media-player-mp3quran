@@ -1,4 +1,4 @@
-package com.example.quranoffline
+package com.example.quranoffline.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -25,6 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.quranoffline.AllReciter
+import com.example.quranoffline.R
+import com.example.quranoffline.RadioStations
+import com.example.quranoffline.data.Moshaf
+import com.example.quranoffline.data.Reciter
 import com.example.quranoffline.ui.components.ComponentRadioPoster
 import com.example.quranoffline.ui.components.ComponentScriptPoster
 import com.example.quranoffline.ui.components.ComposeReciterItem

@@ -1,56 +1,20 @@
-package com.example.quranoffline
+package com.example.quranoffline.data
 
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// Data Models
 data class ReciterResponse(val reciters: List<Reciter>)
 data class SurahResponse(val suwar: List<Surah>)
 
-data class Reciter(
-    val id: Int,
-    val name: String,
-    val letter: String,
-    val moshaf: List<Moshaf>
-)
 
-data class Moshaf(
-    val id: Int,
-    val name: String,
-    val server: String,
-    val surah_total: Int,
-    val moshaf_type: Int,
-    val surah_list: String
-) {
-    companion object {
-        fun generateRandomMoshafList(): List<Moshaf> {
-            return List((1..3).random()) {
-                Moshaf(
-                    id = 1,
-                    name = "Murattal",
-                    server = "",
-                    surah_total = 10,
-                    moshaf_type = 1,
-                    surah_list = "1, 2, 3"
-                )
-            }
-        }
-    }
-}
-
-data class Surah(
-    val id: Int,
-    val name: String,
-    val start_page: Int,
-    val end_page: Int,
-    val makkia: Int,
-    val type: Int
-)
-
-// Retrofit
-object RetrofitInstance {
+@Module
+@InstallIn(SingletonComponent::class)
+object RecitersApi {
     val api: ReciterApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://www.mp3quran.net/api/v3/")

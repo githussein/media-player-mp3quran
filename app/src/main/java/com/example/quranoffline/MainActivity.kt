@@ -14,6 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
+import com.example.quranoffline.ui.HomeScreen
+import com.example.quranoffline.ui.ReciterScreen
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
 import dagger.hilt.android.AndroidEntryPoint
 

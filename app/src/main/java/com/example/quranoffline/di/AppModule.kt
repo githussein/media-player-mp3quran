@@ -1,7 +1,7 @@
 package com.example.quranoffline.di
 
 import android.app.Application
-import com.example.quranoffline.RetrofitInstance
+import com.example.quranoffline.data.RecitersApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ object AppModule : Application() {
 
     @Provides
     @Singleton
-    fun provideApi(): RetrofitInstance {
-        return RetrofitInstance
+    fun provideApi(): RecitersApi {
+        return RecitersApi
     }
 }

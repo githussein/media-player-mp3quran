@@ -1,10 +1,9 @@
-package com.example.quranoffline
+package com.example.quranoffline.ui
 
 import android.media.MediaPlayer
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -27,6 +25,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.quranoffline.data.Reciter
+import com.example.quranoffline.data.Surah
+import com.example.quranoffline.ui.AllRecitersScreen.ReciterViewModel
 
 @Composable
 fun ReciterScreen(
@@ -51,42 +53,28 @@ fun ReciterScreen(
         viewModel.fetchSurahList()
     }
     val reciter = viewModel.selectedReciter.value
-    val surahList = viewModel.surahList.value
+    val surahList by viewModel.surahList.collectAsState()
 
-    if (viewModel.isLoading.value) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(color = Color(0xFF4A0F6F))
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = reciter?.name.orEmpty(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
-    } else {
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item {
-                Text(modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp), text = reciter?.name.orEmpty(), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            }
 
 
-            if (reciter?.moshaf != null && reciter.moshaf.size > 1) {
-                item { ReciterDropdownMenu(reciter = reciter) }
-            }
-
-
-            if (surahList.isNotEmpty() && reciter != null) {
-                val availableSurahId = reciter.moshaf.first().surah_list.split(",").map { it.toInt() }.toList()
-                availableSurahId.forEach {
-                    item { ComposeSurahItem(surahList.find { surah -> surah.id == it }, reciter.moshaf.first().server) }
-                }
-            } else {
-                item { CircularProgressIndicator() }
-            }
-
+        if (reciter?.moshaf != null && reciter.moshaf.size > 1) {
+            item { ReciterDropdownMenu(reciter = reciter) }
         }
+
+        surahList.forEach {
+            item { ComposeSurahItem(it.surah, it.server.orEmpty()) }
+        }
+
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -111,7 +99,6 @@ fun ReciterDropdownMenu(
 
             trailingIcon = { Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "arrow down icon") },
             colors = TextFieldDefaults.textFieldColors(
-//                backgroundColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,

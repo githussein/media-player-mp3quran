@@ -27,9 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.quranoffline.Moshaf
 import com.example.quranoffline.R
-import com.example.quranoffline.Reciter
+import com.example.quranoffline.data.Moshaf
+import com.example.quranoffline.data.Reciter
 
 @Composable
 fun ComposeReciterItem(reciter: Reciter, onReciterClick: (String) -> Unit) {
