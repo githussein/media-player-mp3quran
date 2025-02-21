@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
 import com.example.quranoffline.ui.HomeScreen
+import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
 import com.example.quranoffline.ui.ReciterScreen
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable<RadioStations> {
-                            Text("\n\n\n\n\nRadio Stations")
+                            RadioStationsScreen(
+                                modifier = Modifier.systemBarsPadding()
+                            )
                         }
 
                         composable<AllReciter> {
@@ -52,8 +54,8 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable<ReciterNavigation> {
-                            val reciterId = it.toRoute<ReciterNavigation>().reciterId
+                        composable<Reciter> {
+                            val reciterId = it.toRoute<Reciter>().reciterId
                             ReciterScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 reciterId = reciterId,

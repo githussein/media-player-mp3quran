@@ -9,7 +9,7 @@ object Home
 object AllReciter
 
 @Serializable
-data class ReciterNavigation(val reciterId: String)
+data class Reciter(val reciterId: String)
 
 @Serializable
 object RadioStations

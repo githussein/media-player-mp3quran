@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,18 +22,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quranoffline.R
 
 @Composable
-fun ComponentRadioPoster(modifier: Modifier, imageId: Int = R.drawable.masjid3, stationName: String) {
+fun ComponentRadioPoster(modifier: Modifier, stationName: String, isHome: Boolean = true, imageId: Int = R.drawable.masjid3) {
+    val posterHeight = if (isHome) 180.dp else 300.dp
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
-                .size(180.dp)
+                .width(180.dp)
+                .height(posterHeight)
                 .clip(RoundedCornerShape(16.dp))
         ) {
             Image(
@@ -62,6 +66,6 @@ fun ComponentRadioPoster(modifier: Modifier, imageId: Int = R.drawable.masjid3, 
 
         Spacer(modifier.height(8.dp))
 
-        Text(stationName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Text(stationName, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
     }
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.quranoffline.ReciterNavigation
+import com.example.quranoffline.Reciter
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 @Composable
@@ -50,7 +50,7 @@ fun AllRecitersScreen(
             (resultState as ReciterResultState.Success).response.reciters.forEach { reciter ->
                 item {
                     ComposeReciterItem(reciter) {
-                        navController.navigate(ReciterNavigation(reciter.id.toString()))
+                        navController.navigate(Reciter(reciter.id.toString()))
                     }
                 }
             }
