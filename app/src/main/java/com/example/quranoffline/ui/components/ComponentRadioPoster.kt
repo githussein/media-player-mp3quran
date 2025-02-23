@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.quranoffline.R
@@ -31,6 +32,7 @@ import com.example.quranoffline.R
 fun ComponentRadioPoster(modifier: Modifier, stationName: String, isHome: Boolean = true, imageId: Int = R.drawable.masjid3) {
     val posterHeight = if (isHome) 180.dp else 300.dp
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -46,7 +48,7 @@ fun ComponentRadioPoster(modifier: Modifier, stationName: String, isHome: Boolea
             )
 
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.5f))
@@ -56,7 +58,7 @@ fun ComponentRadioPoster(modifier: Modifier, stationName: String, isHome: Boolea
                     imageVector = Icons.Default.PlayArrow,
                     contentDescription = "play icon",
                     tint = Color.White,
-                    modifier = modifier
+                    modifier = Modifier
                         .size(36.dp)
                         .align(Alignment.Center)
 
@@ -64,8 +66,8 @@ fun ComponentRadioPoster(modifier: Modifier, stationName: String, isHome: Boolea
             }
         }
 
-        Spacer(modifier.height(8.dp))
+        Spacer(Modifier.height(8.dp))
 
-        Text(stationName, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+        Text(stationName, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }

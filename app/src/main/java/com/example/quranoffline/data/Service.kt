@@ -10,20 +10,21 @@ import retrofit2.http.Query
 
 data class ReciterResponse(val reciters: List<Reciter>)
 data class SurahResponse(val suwar: List<Surah>)
+data class RadioStationsResponse(val radios: List<Radio>)
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RecitersApi {
-    val api: ReciterApiService by lazy {
+    val api: Mp3QuranApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://www.mp3quran.net/api/v3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ReciterApiService::class.java)
+            .create(Mp3QuranApiService::class.java)
     }
 
-    interface ReciterApiService {
+    interface Mp3QuranApiService {
         @GET("reciters")
         suspend fun getAllReciters(
             @Query("language") language: String = "eng"
@@ -39,5 +40,10 @@ object RecitersApi {
         suspend fun getSurahName(
             @Query("language") language: String = "eng",
         ): SurahResponse
+
+        @GET("radios")
+        suspend fun getRadioStations(
+            @Query("language") language: String = "eng"
+        ): RadioStationsResponse
     }
 }

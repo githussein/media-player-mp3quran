@@ -45,3 +45,9 @@ data class SurahUi(
     val surah: Surah?,
     val server: String?
 )
+
+data class Radio(
+    val id: Int,
+    val name: String,
+    val url: String
+)

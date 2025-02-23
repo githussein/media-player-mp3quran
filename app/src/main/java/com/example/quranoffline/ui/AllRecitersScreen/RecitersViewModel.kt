@@ -22,7 +22,7 @@ class ReciterViewModel @Inject constructor(
     private val repository: RecitersRepository
 ) : ViewModel() {
 
-    private val _resultState = MutableStateFlow<ReciterResultState>(ReciterResultState.Idle)
+    private val _resultState = MutableStateFlow<RecitationsResultState>(RecitationsResultState.Idle)
     val resultState = _resultState.asStateFlow()
 
     private val _selectedReciter = mutableStateOf<Reciter?>(null)
@@ -38,25 +38,25 @@ class ReciterViewModel @Inject constructor(
 
     private fun fetchReciters() {
         viewModelScope.launch {
-            _resultState.emit(ReciterResultState.Loading)
+            _resultState.emit(RecitationsResultState.Loading)
 
             try {
                 val response = repository.getAllReciters()
-                _resultState.emit(ReciterResultState.Success(response))
+                _resultState.emit(RecitationsResultState.Success(response))
             } catch (e: Exception) {
-                _resultState.emit(ReciterResultState.Failure(e))
+                _resultState.emit(RecitationsResultState.Failure(e))
             }
         }
     }
 
     fun fetchReciterById(id: String) {
         viewModelScope.launch {
-            _resultState.emit(ReciterResultState.Loading)
+            _resultState.emit(RecitationsResultState.Loading)
             try {
                 val response = repository.getReciterById(reciterId = id)
 
                 _selectedReciter.value = response.reciters.firstOrNull()
-                _resultState.emit(ReciterResultState.Success(response))
+                _resultState.emit(RecitationsResultState.Success(response))
 
                 val availableSurahId = response.reciters.firstOrNull()?.moshaf?.firstOrNull()?.surah_list?.split(",")?.map { it.toInt() }?.toList()
 
@@ -69,7 +69,7 @@ class ReciterViewModel @Inject constructor(
                 _surahList.emit(surahNameList.orEmpty())
 
             } catch (e: Exception) {
-                _resultState.emit(ReciterResultState.Failure(e))
+                _resultState.emit(RecitationsResultState.Failure(e))
             }
         }
     }
@@ -86,9 +86,9 @@ class ReciterViewModel @Inject constructor(
 
 }
 
-sealed interface ReciterResultState {
-    data object Idle : ReciterResultState
-    data object Loading : ReciterResultState
-    data class Success(val response: ReciterResponse) : ReciterResultState
-    data class Failure(val e: Exception) : ReciterResultState
+sealed interface RecitationsResultState {
+    data object Idle : RecitationsResultState
+    data object Loading : RecitationsResultState
+    data class Success(val response: ReciterResponse) : RecitationsResultState
+    data class Failure(val e: Exception) : RecitationsResultState
 }
