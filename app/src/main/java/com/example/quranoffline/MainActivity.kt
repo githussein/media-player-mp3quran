@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,11 +20,14 @@ import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
 import com.example.quranoffline.ui.HomeScreen
 import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
 import com.example.quranoffline.ui.ReciterScreen
+import com.example.quranoffline.ui.components.MediaController
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private var isMediaPlayerVisible by mutableStateOf(true) // Track the visibility of the media player
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,7 +35,18 @@ class MainActivity : ComponentActivity() {
             QuranOfflineTheme {
                 val navController = rememberNavController()
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        if (isMediaPlayerVisible) {
+                            MediaController(
+                                title = "Media Title",
+                                description = "Media Description",
+                                onClose = { isMediaPlayerVisible = false }
+                            )
+                        }
+                    }
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = Home

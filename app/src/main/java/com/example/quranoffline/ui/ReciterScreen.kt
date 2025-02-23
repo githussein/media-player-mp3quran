@@ -170,7 +170,7 @@ private fun ComposeSurahItem(surah: Surah?, server: String) {
                         isPlaying = false
                     } else {
                         try {
-                            mediaPlayer.setDataSource(server.formatServerUrl(surah.id))
+                            mediaPlayer.setDataSource(server)
                             mediaPlayer.prepareAsync()
                             mediaPlayer.setOnPreparedListener {
                                 it.start()
