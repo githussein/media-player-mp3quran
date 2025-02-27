@@ -15,7 +15,7 @@ data class RadioStationsResponse(val radios: List<Radio>)
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RecitersApi {
+object Mp3QuranApi {
     val api: Mp3QuranApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://www.mp3quran.net/api/v3/")
