@@ -1,5 +1,8 @@
 package com.example.quranoffline.ui
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -12,15 +15,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,9 +52,13 @@ import com.example.quranoffline.ui.components.ComponentScriptPoster
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(modifier: Modifier, navController: NavController) {
     val verticalScrollState = rememberScrollState()
+    var showModal by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -53,7 +74,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                 .padding(end = 16.dp)
                 .size(24.dp)
                 .align(Alignment.End)
-
+                .clickable { showModal = true }
         )
 
         Text("Tilawah App", fontSize = 20.sp, fontWeight = FontWeight.Bold)
@@ -118,6 +139,18 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
         ComponentScriptPoster(modifier = modifier, title = "Quran\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.moshaf)
         ComponentScriptPoster(modifier = modifier, title = "Hadith\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.hadith)
     }
+
+    if (showModal) {
+        ModalBottomSheet(
+            onDismissRequest = { showModal = false }
+        ) {
+            InfoSheetContent(
+                onItemClick = { url ->
+                    openUrl(context, url)
+                }
+            )
+        }
+    }
 }
 
 
@@ -133,3 +166,123 @@ private fun SectionHeader(left: String, right: String?, onViewAllClick: () -> Un
         Text(right.orEmpty(), color = Color.Blue, modifier = Modifier.clickable(onClick = onViewAllClick))
     }
 }
+
+
+@Composable
+fun InfoSheetContent(onItemClick: (String?) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text("Information", fontSize = 32.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 16.dp))
+        Text("App", color = Color.Gray, modifier = Modifier.padding(horizontal = 16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.Gray.copy(alpha = 0.3f))
+                .padding(horizontal = 16.dp)
+        ) {
+            InfoItem(
+                title = "About",
+                icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                onClick = { onItemClick(null) }
+            )
+            HorizontalDivider(thickness = 0.3.dp)
+            InfoItem(
+                title = "Contact us",
+                icon = Icons.Default.Email,
+                onClick = { onItemClick("https://amrraafat89.wixsite.com/quranvoiceapp/contact") }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Resources", color = Color.Gray, modifier = Modifier.padding(horizontal = 16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.Gray.copy(alpha = 0.3f))
+                .padding(horizontal = 16.dp)
+        ) {
+            InfoItem(
+                title = "Quran API",
+                subtitle = "quranapi.pages.dev",
+                icon = Icons.AutoMirrored.Filled.ExitToApp,
+                onClick = { onItemClick("https://quranapi.pages.dev") }
+            )
+            HorizontalDivider(thickness = 0.3.dp)
+            InfoItem(
+                title = "MP3 Quran",
+                subtitle = "mp3quran.net",
+                icon = Icons.AutoMirrored.Filled.ExitToApp,
+                onClick = { onItemClick("https://mp3quran.net/eng/api") }
+            )
+            HorizontalDivider(thickness = 0.3.dp)
+            InfoItem(
+                title = "Quran Tafseer",
+                subtitle = "api.quran-tafseer.co",
+                icon = Icons.AutoMirrored.Filled.ExitToApp,
+                onClick = { onItemClick("http://api.quran-tafseer.com/en/docs/") }
+            )
+            HorizontalDivider(thickness = 0.3.dp)
+            InfoItem(
+                title = "Hadith API",
+                subtitle = "hadithapi.com",
+                icon = Icons.AutoMirrored.Filled.ExitToApp,
+                onClick = { onItemClick("https://hadithapi.com") }
+            )
+
+        }
+    }
+}
+
+@Composable
+fun InfoItem(
+    title: String,
+    subtitle: String? = null,
+    icon: ImageVector,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                title,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+            if (subtitle != null) {
+                Text(
+                    subtitle,
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+            }
+        }
+        Icon(
+            icon,
+            contentDescription = "icon",
+            tint = Color.Gray,
+            modifier = Modifier.size(18.dp)
+        )
+    }
+
+}
+
+fun openUrl(context: android.content.Context, url: String?) {
+    url?.let {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+        context.startActivity(intent)
+    }
+}
+
