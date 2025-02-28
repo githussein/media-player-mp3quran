@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,7 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,8 +46,10 @@ import com.example.quranoffline.R
 import com.example.quranoffline.RadioStations
 import com.example.quranoffline.data.Moshaf
 import com.example.quranoffline.data.Reciter
+import com.example.quranoffline.ui.components.ComponentInfoItem
 import com.example.quranoffline.ui.components.ComponentRadioPoster
 import com.example.quranoffline.ui.components.ComponentScriptPoster
+import com.example.quranoffline.ui.components.ComponentSectionHeader
 import com.example.quranoffline.ui.components.ComposeReciterItem
 
 
@@ -81,7 +81,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
         Text("Tilawah App", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionHeader("Radio Stations", "view all") {
+        ComponentSectionHeader("Radio Stations", "view all") {
             navController.navigate(RadioStations)
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -100,7 +100,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
         Spacer(modifier = modifier.height(32.dp))
 
 
-        SectionHeader("Reciters", "view all") {
+        ComponentSectionHeader("Reciters", "view all") {
             navController.navigate(AllReciter)
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -135,7 +135,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
         Spacer(modifier = modifier.height(32.dp))
 
 
-        SectionHeader("Quran & Hadith Scripts", null) {}
+        ComponentSectionHeader("Quran & Hadith Scripts", null) {}
         Spacer(modifier = Modifier.height(8.dp))
         ComponentScriptPoster(
             modifier = modifier,
@@ -169,19 +169,6 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
 }
 
 
-@Composable
-private fun SectionHeader(left: String, right: String?, onViewAllClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(left, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Text(right.orEmpty(), color = Color.Blue, modifier = Modifier.clickable(onClick = onViewAllClick))
-    }
-}
-
 
 @Composable
 fun InfoSheetContent(onItemClick: (String?) -> Unit) {
@@ -199,13 +186,13 @@ fun InfoSheetContent(onItemClick: (String?) -> Unit) {
                 .background(Color.Gray.copy(alpha = 0.3f))
                 .padding(horizontal = 16.dp)
         ) {
-            InfoItem(
+            ComponentInfoItem(
                 title = "About",
                 icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 onClick = { onItemClick(null) }
             )
             HorizontalDivider(thickness = 0.3.dp)
-            InfoItem(
+            ComponentInfoItem(
                 title = "Contact us",
                 icon = Icons.Default.Email,
                 onClick = { onItemClick("https://amrraafat89.wixsite.com/quranvoiceapp/contact") }
@@ -222,28 +209,28 @@ fun InfoSheetContent(onItemClick: (String?) -> Unit) {
                 .background(Color.Gray.copy(alpha = 0.3f))
                 .padding(horizontal = 16.dp)
         ) {
-            InfoItem(
+            ComponentInfoItem(
                 title = "Quran API",
                 subtitle = "quranapi.pages.dev",
                 icon = Icons.AutoMirrored.Filled.ExitToApp,
                 onClick = { onItemClick("https://quranapi.pages.dev") }
             )
             HorizontalDivider(thickness = 0.3.dp)
-            InfoItem(
+            ComponentInfoItem(
                 title = "MP3 Quran",
                 subtitle = "mp3quran.net",
                 icon = Icons.AutoMirrored.Filled.ExitToApp,
                 onClick = { onItemClick("https://mp3quran.net/eng/api") }
             )
             HorizontalDivider(thickness = 0.3.dp)
-            InfoItem(
+            ComponentInfoItem(
                 title = "Quran Tafseer",
                 subtitle = "api.quran-tafseer.co",
                 icon = Icons.AutoMirrored.Filled.ExitToApp,
                 onClick = { onItemClick("http://api.quran-tafseer.com/en/docs/") }
             )
             HorizontalDivider(thickness = 0.3.dp)
-            InfoItem(
+            ComponentInfoItem(
                 title = "Hadith API",
                 subtitle = "hadithapi.com",
                 icon = Icons.AutoMirrored.Filled.ExitToApp,
@@ -254,45 +241,6 @@ fun InfoSheetContent(onItemClick: (String?) -> Unit) {
     }
 }
 
-@Composable
-fun InfoItem(
-    title: String,
-    subtitle: String? = null,
-    icon: ImageVector,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(
-                title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-            )
-            if (subtitle != null) {
-                Text(
-                    subtitle,
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-            }
-        }
-        Icon(
-            icon,
-            contentDescription = "icon",
-            tint = Color.Gray,
-            modifier = Modifier.size(18.dp)
-        )
-    }
-
-}
 
 fun openUrl(context: android.content.Context, url: String?) {
     url?.let {
