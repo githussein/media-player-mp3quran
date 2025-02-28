@@ -20,6 +20,7 @@ import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
 import com.example.quranoffline.ui.HomeScreen
 import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
 import com.example.quranoffline.ui.ReciterScreen
+import com.example.quranoffline.ui.TranscriptScreen.ChaptersScreen
 import com.example.quranoffline.ui.components.MediaController
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -76,6 +77,13 @@ class MainActivity : ComponentActivity() {
                             ReciterScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 reciterId = reciterId,
+                            )
+                        }
+
+                        composable<Chapters> {
+                            ChaptersScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
                             )
                         }
                     }

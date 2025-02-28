@@ -7,14 +7,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-data class QSurahResponse(val surah: List<QSurah>)
+data class QSurahResponse(val chaptersList: List<QSurah>)
 
 @Module
 @InstallIn(SingletonComponent::class)
 object QuranApiService {
     val api: QuranApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("quranapi.pages.dev/api/")
+            .baseUrl("https://quranapi.pages.dev/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(QuranApiService::class.java)
@@ -22,7 +22,7 @@ object QuranApiService {
 
     interface QuranApiService {
         @GET("surah.json")
-        suspend fun getQSurahs(): QSurahResponse
+        suspend fun getQSurahs(): List<QSurah>
     }
 }
 

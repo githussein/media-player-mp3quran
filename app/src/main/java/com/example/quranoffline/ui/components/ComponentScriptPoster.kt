@@ -2,6 +2,7 @@ package com.example.quranoffline.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ComponentScriptPoster(modifier: Modifier, title: String, description: String, painterResourceId: Int) {
+fun ComponentScriptPoster(modifier: Modifier, title: String, description: String, painterResourceId: Int, onScriptPosterClick: () -> Unit) {
     Box(
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
@@ -43,6 +44,8 @@ fun ComponentScriptPoster(modifier: Modifier, title: String, description: String
                     )
                 )
             )
+            .clickable(onClick = onScriptPosterClick)
+
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

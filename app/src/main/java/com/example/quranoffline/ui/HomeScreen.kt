@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.quranoffline.AllReciter
+import com.example.quranoffline.Chapters
 import com.example.quranoffline.R
 import com.example.quranoffline.RadioStations
 import com.example.quranoffline.data.Moshaf
@@ -136,8 +137,22 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
 
         SectionHeader("Quran & Hadith Scripts", null) {}
         Spacer(modifier = Modifier.height(8.dp))
-        ComponentScriptPoster(modifier = modifier, title = "Quran\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.moshaf)
-        ComponentScriptPoster(modifier = modifier, title = "Hadith\n", description = "with Arabic script and \nEnglish translation", painterResourceId = R.drawable.hadith)
+        ComponentScriptPoster(
+            modifier = modifier,
+            title = "Quran\n",
+            description = "with Arabic script and \nEnglish translation",
+            painterResourceId = R.drawable.moshaf
+        ) {
+            navController.navigate(Chapters)
+        }
+        ComponentScriptPoster(
+            modifier = modifier,
+            title = "Hadith\n",
+            description = "with Arabic script and \nEnglish translation",
+            painterResourceId = R.drawable.hadith
+        ) {
+//            navController.navigate(Chapters)
+        }
     }
 
     if (showModal) {

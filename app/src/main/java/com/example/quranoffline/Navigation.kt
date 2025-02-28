@@ -13,3 +13,6 @@ data class Reciter(val reciterId: String)
 
 @Serializable
 object RadioStations
+
+@Serializable
+object Chapters

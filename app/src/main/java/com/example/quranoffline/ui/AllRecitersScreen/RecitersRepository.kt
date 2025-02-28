@@ -1,7 +1,7 @@
 package com.example.quranoffline.ui.AllRecitersScreen
 
 import com.example.quranoffline.data.Moshaf
-import com.example.quranoffline.data.Mp3QuranApi
+import com.example.quranoffline.data.Mp3QuranService
 import com.example.quranoffline.data.Reciter
 import com.example.quranoffline.data.ReciterResponse
 import javax.inject.Inject
@@ -13,7 +13,7 @@ interface IRecitersRepository {
 }
 
 class RecitersRepository @Inject constructor(
-    private val apiService: Mp3QuranApi
+    private val apiService: Mp3QuranService
 ) : IRecitersRepository {
     override suspend fun getAllReciters(): ReciterResponse = apiService.api.getAllReciters()
     override suspend fun getReciterById(reciterId: String) = apiService.api.getReciterById(reciterId = reciterId, language = "en")
