@@ -17,9 +17,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
+import com.example.quranoffline.ui.AllRecitersScreen.ReciterScreen
 import com.example.quranoffline.ui.HomeScreen
 import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
-import com.example.quranoffline.ui.ReciterScreen
+import com.example.quranoffline.ui.TranscriptScreen.ChapterScriptScreen
 import com.example.quranoffline.ui.TranscriptScreen.ChaptersScreen
 import com.example.quranoffline.ui.components.MediaController
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
@@ -84,6 +85,14 @@ class MainActivity : ComponentActivity() {
                             ChaptersScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController
+                            )
+                        }
+
+                        composable<ChapterScript> {
+                            val chapterId = it.toRoute<ChapterScript>().chapterId
+                            ChapterScriptScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                chapterId = chapterId
                             )
                         }
                     }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.quranoffline.ChapterScript
 import com.example.quranoffline.ui.components.ComponentLoadingState
 import com.example.quranoffline.ui.components.TranscriptChapterItem
 
@@ -34,11 +35,13 @@ fun ChaptersScreen(
                         index = (index + 1).toString(),
                         chapter = chapter
                     ) {
-//                        navController.navigate(Reciter(reciter.id.toString()))
+                        navController.navigate(ChapterScript((index + 1).toString()))
                     }
                 }
             }
         }
+
+        is ChaptersResultState.ScriptSuccess -> {}
 
 
         is ChaptersResultState.Failure -> Text("error")

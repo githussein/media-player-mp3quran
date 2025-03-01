@@ -1,4 +1,4 @@
-package com.example.quranoffline.ui
+package com.example.quranoffline.ui.AllRecitersScreen
 
 import android.media.MediaPlayer
 import androidx.compose.foundation.border
@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.quranoffline.data.Reciter
 import com.example.quranoffline.data.Surah
-import com.example.quranoffline.ui.AllRecitersScreen.ReciterViewModel
 
 @Composable
 fun ReciterScreen(

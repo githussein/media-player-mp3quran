@@ -16,3 +16,6 @@ object RadioStations
 
 @Serializable
 object Chapters
+
+@Serializable
+class ChapterScript(val chapterId: String)

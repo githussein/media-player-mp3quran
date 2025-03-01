@@ -111,27 +111,24 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                 name = "Mahmoud Al-Hussary",
                 letter = "M",
                 moshaf = Moshaf.generateRandomMoshafList()
-            ),
-            {}
-        )
+            )
+        ) {}
         ComposeReciterItem(
             Reciter(
                 id = 1,
                 name = "Mishary Alafasi",
                 letter = "M",
                 moshaf = Moshaf.generateRandomMoshafList()
-            ),
-            {}
-        )
+            )
+        ) {}
         ComposeReciterItem(
             Reciter(
                 id = 1,
                 name = "Mohamemed Al-Minshawy",
                 letter = "M",
                 moshaf = Moshaf.generateRandomMoshafList()
-            ),
-            {}
-        )
+            )
+        ) {}
         Spacer(modifier = modifier.height(32.dp))
 
 

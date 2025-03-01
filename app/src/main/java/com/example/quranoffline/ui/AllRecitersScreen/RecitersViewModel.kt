@@ -10,7 +10,6 @@ import com.example.quranoffline.data.Reciter
 import com.example.quranoffline.data.ReciterResponse
 import com.example.quranoffline.data.Surah
 import com.example.quranoffline.data.SurahUi
-import com.example.quranoffline.ui.formatServerUrl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

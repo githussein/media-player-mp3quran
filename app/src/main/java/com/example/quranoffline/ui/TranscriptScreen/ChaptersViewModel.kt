@@ -2,7 +2,8 @@ package com.example.quranoffline.ui.TranscriptScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.quranoffline.data.QSurahResponse
+import com.example.quranoffline.data.ChapterScriptResponse
+import com.example.quranoffline.data.ChaptersResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +16,9 @@ class ChaptersViewModel @Inject constructor(
 ) : ViewModel() {
     private val _resultState = MutableStateFlow<ChaptersResultState>(ChaptersResultState.Idle)
     val resultState = _resultState.asStateFlow()
+
+    private val _chapterScript = MutableStateFlow<ChapterScriptResponse?>(null)
+    val chapterScript = _chapterScript.asStateFlow()
 
     init {
         fetchChapters()
@@ -30,7 +34,21 @@ class ChaptersViewModel @Inject constructor(
                 _resultState.emit(ChaptersResultState.Success(response))
             } catch (e: Exception) {
                 _resultState.emit(ChaptersResultState.Failure(e))
-                println(e)
+            }
+        }
+    }
+
+    fun getChapterScript(chapterId: String) {
+        viewModelScope.launch {
+            _resultState.emit(ChaptersResultState.Loading)
+
+            try {
+                val response = repository.getChapterScript(chapterId)
+                _chapterScript.emit(response)
+                _resultState.emit(ChaptersResultState.ScriptSuccess(response))
+                println(response)
+            } catch (e: Exception) {
+                _resultState.emit(ChaptersResultState.Failure(e))
             }
         }
     }
@@ -39,6 +57,7 @@ class ChaptersViewModel @Inject constructor(
 sealed interface ChaptersResultState {
     data object Idle : ChaptersResultState
     data object Loading : ChaptersResultState
-    data class Success(val response: QSurahResponse) : ChaptersResultState
+    data class Success(val response: ChaptersResponse) : ChaptersResultState
+    data class ScriptSuccess(val response: ChapterScriptResponse) : ChaptersResultState
     data class Failure(val e: Exception) : ChaptersResultState
 }
