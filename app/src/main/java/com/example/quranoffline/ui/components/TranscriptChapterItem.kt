@@ -40,7 +40,7 @@ fun TranscriptChapterItem(
         Column(
             modifier = Modifier.weight(1f),
         ) {
-            Text(text = chapter.surahNameArabicLong, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(text = chapter.surahNameArabicLong, fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = chapter.surahName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(4.dp))
