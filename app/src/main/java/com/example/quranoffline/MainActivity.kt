@@ -18,10 +18,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
 import com.example.quranoffline.ui.AllRecitersScreen.ReciterScreen
+import com.example.quranoffline.ui.ChapterScript.ChapterScriptScreen
+import com.example.quranoffline.ui.ChapterScript.ChaptersScreen
+import com.example.quranoffline.ui.HadithScript.BookScreen
 import com.example.quranoffline.ui.HomeScreen
 import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
-import com.example.quranoffline.ui.TranscriptScreen.ChapterScriptScreen
-import com.example.quranoffline.ui.TranscriptScreen.ChaptersScreen
 import com.example.quranoffline.ui.components.MediaController
 import com.example.quranoffline.ui.theme.QuranOfflineTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,6 +94,13 @@ class MainActivity : ComponentActivity() {
                             ChapterScriptScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 chapterId = chapterId
+                            )
+                        }
+
+                        composable<Books> {
+                            BookScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
                             )
                         }
                     }

@@ -1,4 +1,4 @@
-package com.example.quranoffline.ui.TranscriptScreen
+package com.example.quranoffline.ui.ChapterScript
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

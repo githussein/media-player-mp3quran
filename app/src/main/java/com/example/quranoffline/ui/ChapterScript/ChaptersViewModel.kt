@@ -1,5 +1,6 @@
-package com.example.quranoffline.ui.TranscriptScreen
+package com.example.quranoffline.ui.ChapterScript
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quranoffline.data.ChapterScriptResponse
@@ -34,6 +35,7 @@ class ChaptersViewModel @Inject constructor(
                 _resultState.emit(ChaptersResultState.Success(response))
             } catch (e: Exception) {
                 _resultState.emit(ChaptersResultState.Failure(e))
+                Log.e("ChaptersViewModel", "Error fetching chapters: ${e.message}")
             }
         }
     }
@@ -49,6 +51,7 @@ class ChaptersViewModel @Inject constructor(
                 println(response)
             } catch (e: Exception) {
                 _resultState.emit(ChaptersResultState.Failure(e))
+                Log.e("ChaptersViewModel", "Error fetching script: ${e.message}")
             }
         }
     }

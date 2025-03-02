@@ -1,8 +1,8 @@
-package com.example.quranoffline.ui.TranscriptScreen
+package com.example.quranoffline.ui.ChapterScript
 
 import com.example.quranoffline.data.ChapterScriptResponse
 import com.example.quranoffline.data.ChaptersResponse
-import com.example.quranoffline.data.QuranApiService
+import com.example.quranoffline.data.QuranService
 import javax.inject.Inject
 
 interface IChaptersRepository {
@@ -11,7 +11,7 @@ interface IChaptersRepository {
 }
 
 class ChaptersRepository @Inject constructor(
-    private val apiService: QuranApiService
+    private val apiService: QuranService
 ) : IChaptersRepository {
     override suspend fun getChapters(): ChaptersResponse {
         val surahList = apiService.api.getQSurahs()

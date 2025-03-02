@@ -19,3 +19,6 @@ object Chapters
 
 @Serializable
 class ChapterScript(val chapterId: String)
+
+@Serializable
+object Books

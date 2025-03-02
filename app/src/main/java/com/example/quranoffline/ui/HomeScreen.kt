@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.quranoffline.AllReciter
+import com.example.quranoffline.Books
 import com.example.quranoffline.Chapters
 import com.example.quranoffline.R
 import com.example.quranoffline.RadioStations
@@ -148,7 +149,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
             description = "with Arabic script and \nEnglish translation",
             painterResourceId = R.drawable.hadith
         ) {
-//            navController.navigate(Chapters)
+            navController.navigate(Books)
         }
     }
 

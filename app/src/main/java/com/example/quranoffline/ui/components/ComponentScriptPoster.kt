@@ -1,6 +1,7 @@
 package com.example.quranoffline.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +24,9 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ComponentScriptPoster(modifier: Modifier, title: String, description: String, painterResourceId: Int, onScriptPosterClick: () -> Unit) {
-    ComponentGradientBox {
+    ComponentGradientBox(
+        modifier = modifier.clickable { onScriptPosterClick() }
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier.fillMaxSize()
@@ -37,7 +40,7 @@ fun ComponentScriptPoster(modifier: Modifier, title: String, description: String
                 Text(title, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 Text(description, color = Color.White.copy(alpha = 0.8f))
                 Button(
-                    onClick = {},
+                    onClick = { onScriptPosterClick() },
                     colors = ButtonDefaults.buttonColors(Color.White.copy(alpha = 0.9f)),
                     shape = RoundedCornerShape(100),
                     modifier = modifier.padding(top = 8.dp),

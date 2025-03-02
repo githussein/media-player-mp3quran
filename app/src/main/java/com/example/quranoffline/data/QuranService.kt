@@ -13,7 +13,7 @@ data class ChapterScriptResponse(val chapterScript: ChapterScriptModel)
 
 @Module
 @InstallIn(SingletonComponent::class)
-object QuranApiService {
+object QuranService {
     val api: QuranApiService by lazy {
         Retrofit.Builder()
             .baseUrl("https://quranapi.pages.dev/api/")
