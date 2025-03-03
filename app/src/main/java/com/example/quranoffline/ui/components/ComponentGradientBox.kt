@@ -28,9 +28,9 @@ fun ComponentGradientBox(
 ) {
     Box(
         modifier = modifier
+            .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .clip(RoundedCornerShape(12))
-            .fillMaxWidth()
             .height(height)
             .background(
                 brush = Brush.horizontalGradient(colors = colors)

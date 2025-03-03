@@ -20,6 +20,7 @@ import com.example.quranoffline.ui.AllRecitersScreen.AllRecitersScreen
 import com.example.quranoffline.ui.AllRecitersScreen.ReciterScreen
 import com.example.quranoffline.ui.ChapterScript.ChapterScriptScreen
 import com.example.quranoffline.ui.ChapterScript.ChaptersScreen
+import com.example.quranoffline.ui.HadithScript.BookChaptersScreen
 import com.example.quranoffline.ui.HadithScript.BookScreen
 import com.example.quranoffline.ui.HomeScreen
 import com.example.quranoffline.ui.RadioStationsScreen.RadioStationsScreen
@@ -101,6 +102,14 @@ class MainActivity : ComponentActivity() {
                             BookScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController
+                            )
+                        }
+
+                        composable<BookChapters> {
+                            BookChaptersScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController,
+                                bookId = it.toRoute<BookChapters>().bookId
                             )
                         }
                     }

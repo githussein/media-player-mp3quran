@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.quranoffline.BookChapters
 import com.example.quranoffline.ui.components.ComponentBookItem
 import com.example.quranoffline.ui.components.ComponentLoadingState
 
@@ -30,15 +31,16 @@ fun BookScreen(
         is BookResultState.Success -> LazyColumn(
             modifier = modifier.fillMaxSize()
         ) {
-            (resultState as BookResultState.Success).response.books.forEachIndexed { index, book ->
+            (resultState as BookResultState.Success).response.books.forEach { book ->
                 item {
                     ComponentBookItem(book = book) {
-//                        navController.navigate(ChapterScript((index + 1).toString()))
+                        navController.navigate(BookChapters(book.bookSlug))
                     }
                 }
             }
         }
 
+        is BookResultState.BookSuccess -> {}
 
         is BookResultState.Failure -> Box(
             contentAlignment = Alignment.Center,
